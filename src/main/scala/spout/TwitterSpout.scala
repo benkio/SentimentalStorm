@@ -16,7 +16,7 @@ import backtype.storm.tuple.Values
 import twitter4j.auth.AccessToken
 import twitter4j.conf.ConfigurationBuilder
 
-import TwitterAPIUtils._
+import spout.TwitterAPIUtils._
 
 class TwitterSampleSpout(keyWords: Array[String]) extends BaseRichSpout {
 

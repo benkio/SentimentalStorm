@@ -1,4 +1,4 @@
-package TwitterAPIUtils
+package spout.TwitterAPIUtils
 
 import twitter4j.Status
 import java.util.concurrent.LinkedBlockingQueue
