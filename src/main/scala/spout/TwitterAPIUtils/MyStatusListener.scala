@@ -8,7 +8,7 @@ import twitter4j.StatusDeletionNotice
 /**
  * Created by benkio on 02/08/15.
  */
-class statusListener(queue: LinkedBlockingQueue[Status]) extends StatusListener{
+class MyStatusListener(queue: LinkedBlockingQueue[Status]) extends StatusListener{
   override def onStatus(status:Status) {
     queue.offer(status)
   }

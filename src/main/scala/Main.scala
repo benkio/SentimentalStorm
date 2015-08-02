@@ -4,9 +4,9 @@
 import utils._
 object Main {
   def main(args: Array[String]) {
-    val positivefile = new fileReader(files.positiveWordsFile)
+    val positivefile = new FileReader(Files.positiveWordsFile)
     println(positivefile.words)
-    val negativefile = new fileReader(files.negativeWordsFile)
+    val negativefile = new FileReader(Files.negativeWordsFile)
     println(negativefile.words)
   }
 }

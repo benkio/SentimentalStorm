@@ -35,9 +35,9 @@ class TwitterSampleSpout(keyWords: Array[String]) extends BaseRichSpout {
       new ConfigurationBuilder().setJSONStoreEnabled(true).build())
       .getInstance()
 
-    twitterStream.addListener(new statusListener(queue))
-    twitterStream.setOAuthConsumer(keys.APIKey, keys.APISecret)
-    twitterStream.setOAuthAccessToken(new AccessToken(keys.Token, keys.TokenSecret))
+    twitterStream.addListener(new StatusListener(queue))
+    twitterStream.setOAuthConsumer(Keys.APIKey, Keys.APISecret)
+    twitterStream.setOAuthAccessToken(new AccessToken(Keys.Token, Keys.TokenSecret))
 
     if (keyWords.length == 0)
       twitterStream.sample()

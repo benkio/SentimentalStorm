@@ -1,6 +1,6 @@
 package spout.TwitterAPIUtils
 
-object keys{
+object Keys{
   val APIKey = ""
   val APISecret = ""
   val Token = ""
