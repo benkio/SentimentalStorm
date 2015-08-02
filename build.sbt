@@ -1,7 +1,3 @@
-import AssemblyKeys._
-
-seq(assemblySettings: _*)
-
 name := "scala-storm-starter"
 
 version := "0.0.2-SNAPSHOT"
@@ -16,11 +12,10 @@ resolvers ++= Seq(
 )
 
 libraryDependencies ++= Seq(
-  "storm" % "storm" % "0.9.3" % "provided",
+  "org.apache.storm" % "storm-core" % "0.9.3" % "provided",
   "org.clojure" % "clojure" % "1.4.0" % "provided",
-  "org.twitter4j" % "twitter4j-core" % "4.0.3-SNAPSHOT",
-  "org.twitter4j" % "twitter4j-stream" % "4.0.3-SNAPSHOT",
-  "org.specs2" %% "specs2" % "1.11" % "test"
+  "org.twitter4j" % "twitter4j-core" % "4.0.2",
+  "org.twitter4j" % "twitter4j-stream" % "4.0.2"
 )
 
 mainClass in Compile := Some("Main")
