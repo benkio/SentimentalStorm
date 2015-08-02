@@ -1,12 +1,20 @@
 /**
  * Created by benkio on 02/08/15.
   */
-import utils._
+
+import backtype.storm.LocalCluster
+import topology.TopologyBuilder
+import backtype.storm.Config
 object Main {
   def main(args: Array[String]) {
-    val positivefile = new FileReader(Files.positiveWordsFile)
-    println(positivefile.words)
-    val negativefile = new FileReader(Files.negativeWordsFile)
-    println(negativefile.words)
+
+    val conf = new Config()
+    conf.setDebug(true)
+
+    val cluster: LocalCluster = new LocalCluster()
+    cluster.submitTopology("OSEcho", conf, TopologyBuilder.buildOSSentimentalTopology(1,1))
+
+    Thread.sleep(10000)
+    cluster.shutdown()
   }
 }

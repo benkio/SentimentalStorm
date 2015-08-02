@@ -1,0 +1,24 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+;	LIST OF KEYWORDS USED FOR SENTIMENTAL ANALYSIS
+;
+;	the program will generate an spout for every word
+;	in order to start some streaming.
+; 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+Windows10
+Windows8
+Windows7
+Ubuntu
+Linux Mint
+Debian
+Fedora
+OS X El Capitan
+OS X Yosemite
+OS X Maverick
+
+
+
+
+
