@@ -1,6 +1,6 @@
 package TwitterAPIUtils
 
-object keys(){
+object keys{
   val APIKey = ""
   val APISecret = ""
   val Token = ""
