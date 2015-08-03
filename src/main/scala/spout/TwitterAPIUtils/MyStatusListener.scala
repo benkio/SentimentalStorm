@@ -1,16 +1,17 @@
-package spout.TwitterAPIUtils
+package commonDataStructures
 
 import twitter4j.Status
 import java.util.concurrent.LinkedBlockingQueue
 import twitter4j._
 import twitter4j.StatusDeletionNotice
+import commonDataStructures._
 
 /**
  * Created by benkio on 02/08/15.
  */
-class MyStatusListener(queue: LinkedBlockingQueue[Status]) extends StatusListener{
+class MyStatusListener(queue: LinkedBlockingQueue[Tweet]) extends StatusListener{
   override def onStatus(status:Status) {
-    queue.offer(status)
+    queue.offer(Tweet(Author(status.getUser.getScreenName), status.getCreatedAt.getTime, status.getText))
   }
 
   override def onDeletionNotice(sdn: StatusDeletionNotice) {}

@@ -15,18 +15,19 @@ import backtype.storm.tuple.Fields
 import backtype.storm.tuple.Values
 import twitter4j.auth.AccessToken
 import twitter4j.conf.ConfigurationBuilder
+import commonDataStructures._
 
 import spout.TwitterAPIUtils._
 
 class TwitterSampleSpout(keyWords: Array[String]) extends BaseRichSpout {
 
   var _collector: SpoutOutputCollector = null
-  var queue: LinkedBlockingQueue[Status] = null
+  var queue: LinkedBlockingQueue[Tweet] = null
   var _twitterStream: TwitterStream = null
 
 
   override def open(conf: Map[_,_], context: TopologyContext, collector: SpoutOutputCollector) {
-    queue = new LinkedBlockingQueue[Status](1000)
+    queue = new LinkedBlockingQueue[Tweet](1000)
     _collector = collector
 
 
@@ -44,6 +45,7 @@ class TwitterSampleSpout(keyWords: Array[String]) extends BaseRichSpout {
     else
       twitterStream.filter(new FilterQuery().track(keyWords))
 
+    _twitterStream = twitterStream
   }
 
   override def nextTuple = {
@@ -67,7 +69,7 @@ class TwitterSampleSpout(keyWords: Array[String]) extends BaseRichSpout {
   override def fail(id: Object) { }
 
   override def declareOutputFields(declarer: OutputFieldsDeclarer) {
-    declarer.declare(new Fields("tweet"))
+    declarer.declare(new Fields("Tweet"))
   }
 
 }
