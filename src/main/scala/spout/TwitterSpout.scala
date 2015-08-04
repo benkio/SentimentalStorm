@@ -13,13 +13,11 @@ import backtype.storm.topology.OutputFieldsDeclarer
 import backtype.storm.topology.base.BaseRichSpout
 import backtype.storm.tuple.Fields
 import backtype.storm.tuple.Values
-import twitter4j.auth.AccessToken
-import twitter4j.conf.ConfigurationBuilder
 import commonDataStructures._
 
 import spout.TwitterAPIUtils._
 
-class TwitterSampleSpout(keyWords: Array[String]) extends BaseRichSpout {
+class TwitterSampleSpout(keywords: List[String]) extends BaseRichSpout {
 
   var _collector: SpoutOutputCollector = null
   var queue: LinkedBlockingQueue[Tweet] = null
@@ -27,25 +25,14 @@ class TwitterSampleSpout(keyWords: Array[String]) extends BaseRichSpout {
 
 
   override def open(conf: Map[_,_], context: TopologyContext, collector: SpoutOutputCollector) {
+    //Setup The structures used by storm
     queue = new LinkedBlockingQueue[Tweet](1000)
     _collector = collector
 
-
-
-    val twitterStream = new TwitterStreamFactory(
-      new ConfigurationBuilder().setJSONStoreEnabled(true).build())
-      .getInstance()
-
-    twitterStream.addListener(new MyStatusListener(queue))
-    twitterStream.setOAuthConsumer(Keys.APIKey, Keys.APISecret)
-    twitterStream.setOAuthAccessToken(new AccessToken(Keys.Token, Keys.TokenSecret))
-
-    if (keyWords.length == 0)
-      twitterStream.sample()
-    else
-      twitterStream.filter(new FilterQuery().track(keyWords))
-
-    _twitterStream = twitterStream
+    val spoutsSize: Int = context.getComponentTasks(context.getThisComponentId()).size()
+    val myIdx: Int = context.getThisTaskIndex()
+    
+    _twitterStream = TwitterStreamBuilder.buildTwitterStream(KeywordListSplitter.getKeywordList(keywords,spoutsSize,myIdx),queue)
   }
 
   override def nextTuple = {
