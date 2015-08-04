@@ -20,19 +20,19 @@ import spout.TwitterAPIUtils._
 class TwitterSampleSpout(keywords: List[String]) extends BaseRichSpout {
 
   var _collector: SpoutOutputCollector = null
-  var queue: LinkedBlockingQueue[Tweet] = null
+  var queue: LinkedBlockingQueue[StormTweet] = null
   var _twitterStream: TwitterStream = null
 
 
   override def open(conf: Map[_,_], context: TopologyContext, collector: SpoutOutputCollector) {
     //Setup The structures used by storm
-    queue = new LinkedBlockingQueue[Tweet](1000)
+    queue = new LinkedBlockingQueue[StormTweet](1000)
     _collector = collector
 
     val spoutsSize: Int = context.getComponentTasks(context.getThisComponentId()).size()
     val myIdx: Int = context.getThisTaskIndex()
     
-    _twitterStream = TwitterStreamBuilder.buildTwitterStream(KeywordListSplitter.getKeywordList(keywords,spoutsSize,myIdx),queue)
+    _twitterStream = TwitterStreamBuilder.buildTwitterStream(KeywordListSplitter.getKeywordList(keywords,spoutsSize,myIdx),queue,context.getThisComponentId(),myIdx)
   }
 
   override def nextTuple = {
@@ -56,7 +56,7 @@ class TwitterSampleSpout(keywords: List[String]) extends BaseRichSpout {
   override def fail(id: Object) { }
 
   override def declareOutputFields(declarer: OutputFieldsDeclarer) {
-    declarer.declare(new Fields("Tweet"))
+    declarer.declare(new Fields("StormTweet"))
   }
 
 }

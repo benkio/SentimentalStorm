@@ -12,3 +12,7 @@ case class Tweet(author: Author, timestamp: Long, body: String) {
 }
 
 final object EmptyTweet extends Tweet(Author(""), 0L, "")
+
+final case class StormStep(compontentId: String, taskIndex: Int)
+
+case class StormTweet(tweet: Tweet, stormSteps: List[StormStep])

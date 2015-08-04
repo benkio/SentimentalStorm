@@ -12,8 +12,8 @@ object TopologyBuilder {
   val builder = new TopologyBuilder()
   val keywords = new FileReader(Files.keywordsFile)
   def buildOSSentimentalTopology(spoutHintParallelism: Int, boltHintParallelism: Int): StormTopology = {
-    builder.setSpout("OS",new TwitterSampleSpout(keywords.words.toArray) ,spoutHintParallelism)
-    builder.setBolt("split", new EchoBolt, 2).shuffleGrouping("OS")
+    builder.setSpout("OS",new TwitterSampleSpout(keywords.words) ,spoutHintParallelism)
+    builder.setBolt("split", new EchoBolt, boltHintParallelism).shuffleGrouping("OS")
     builder.createTopology()
   }
 }

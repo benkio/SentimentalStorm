@@ -9,13 +9,13 @@ import java.util.concurrent.LinkedBlockingQueue
 import commonDataStructures._
 
 object TwitterStreamBuilder {
-  def buildTwitterStream(filterKeywordsList: List[String], queue: LinkedBlockingQueue[Tweet]): TwitterStream = {
+  def buildTwitterStream(filterKeywordsList: List[String], queue: LinkedBlockingQueue[StormTweet],componentId: String,taskId: Int): TwitterStream = {
     //Setup Twitter4j object for request and response
     val twitterStream = new TwitterStreamFactory(
       new ConfigurationBuilder().setJSONStoreEnabled(true).build())
       .getInstance()
 
-    twitterStream.addListener(new MyStatusListener(queue))
+    twitterStream.addListener(new MyStatusListener(queue,componentId,taskId))
     twitterStream.setOAuthConsumer(Keys.APIKey, Keys.APISecret)
     twitterStream.setOAuthAccessToken(new AccessToken(Keys.Token, Keys.TokenSecret))
 

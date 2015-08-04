@@ -9,9 +9,18 @@ import commonDataStructures._
 /**
  * Created by benkio on 02/08/15.
  */
-class MyStatusListener(queue: LinkedBlockingQueue[Tweet]) extends StatusListener{
+class MyStatusListener(queue: LinkedBlockingQueue[StormTweet],componentId: String, taskIndex: Int) extends StatusListener{
   override def onStatus(status:Status) {
-    queue.offer(Tweet(Author(status.getUser.getScreenName), status.getCreatedAt.getTime, status.getText))
+    queue.offer(StormTweet(
+      Tweet(
+        Author(status.getUser.getScreenName),
+        status.getCreatedAt.getTime,
+        status.getText
+      ),
+      List(
+        StormStep(componentId,taskIndex)
+      ))
+    )
   }
 
   override def onDeletionNotice(sdn: StatusDeletionNotice) {}

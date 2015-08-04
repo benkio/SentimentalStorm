@@ -13,11 +13,11 @@ import commonDataStructures._
 class EchoBolt extends BaseBasicBolt{
 
     override def execute(tuple: Tuple, collector: BasicOutputCollector) {
-      val tweet = tuple.getValue(0) match {
-        case t : Tweet => t
+      val stormTweet = tuple.getValue(0) match {
+        case t : StormTweet => t
         case _ => throw new ClassCastException
       }
-      println("BY: " +tweet.author.handle +" @: "+tweet.timestamp.toString +" CONTENT: " + tweet.body)
+      println("BY: " +stormTweet.tweet.author.handle +" @: "+ stormTweet.tweet.timestamp.toString +" CONTENT: " + stormTweet.tweet.body)
     }
 
   override def declareOutputFields(outputFieldsDeclarer: OutputFieldsDeclarer): Unit = {}
