@@ -14,6 +14,8 @@ import backtype.storm.topology.base.BaseRichSpout
 import backtype.storm.tuple.Fields
 import backtype.storm.tuple.Values
 import commonDataStructures._
+import scala.concurrent._
+import scala.concurrent.duration._
 
 import spout.TwitterAPIUtils._
 
@@ -21,7 +23,7 @@ class TwitterSampleSpout(keywords: List[String]) extends BaseRichSpout {
 
   var _collector: SpoutOutputCollector = null
   var queue: LinkedBlockingQueue[StormTweet] = null
-  var _twitterStream: TwitterStream = null
+  var _twitterStream: Future[TwitterStream] = null
 
 
   override def open(conf: Map[_,_], context: TopologyContext, collector: SpoutOutputCollector) {
@@ -42,10 +44,10 @@ class TwitterSampleSpout(keywords: List[String]) extends BaseRichSpout {
   }
 
   override def close = {
-    _twitterStream.shutdown()
+   Await.result( _twitterStream,Duration(5, SECONDS)).shutdown
   }
 
-  override def getComponentConfiguration: util.Map[String, Object] = {
+  override def getComponentConfiguration: java.util.Map[String, Object] = {
     val ret = new Config
     ret.setMaxTaskParallelism(1)
     ret
