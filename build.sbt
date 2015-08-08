@@ -1,4 +1,4 @@
-name := "scala-storm-starter"
+name := "SentimentalStorm"
 
 version := "0.0.2-SNAPSHOT"
 
