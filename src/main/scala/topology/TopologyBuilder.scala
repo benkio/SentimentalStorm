@@ -26,8 +26,10 @@ object TopologyBuilder {
     builder.setBolt("KeywordSplitter", new KeywordStreamBolt(keywords),boltHintParallelism).shuffleGrouping("OS")
     builder.setBolt("Judge",new JudgeBolt(positiveWords,negativeWords), boltHintParallelism).fieldsGrouping("KeywordSplitter", new Fields("keyword"))
     //builder.setBolt("OS Echo", new EchoBolt, boltHintParallelism).shuffleGrouping("OS")
-    builder.setBolt("positiveStream Echo", new EchoBolt, boltHintParallelism).fieldsGrouping("Judge","PositiveTweetStream", new Fields("keyword", "sentimentalWord"))
-    builder.setBolt("negativeStream Echo", new EchoBolt, boltHintParallelism).fieldsGrouping("Judge","NegativeTweetStream", new Fields("keyword", "sentimentalWord"))
+    builder.setBolt("positiveCounter", new SentimentalCounter,boltHintParallelism).fieldsGrouping("Judge","PositiveTweetStream", new Fields("keyword", "sentimentalWord"))
+    builder.setBolt("negativeCounter", new SentimentalCounter,boltHintParallelism).fieldsGrouping("Judge","NegativeTweetStream", new Fields("keyword", "sentimentalWord"))
+    builder.setBolt("positiveStream Echo", new EchoBolt, boltHintParallelism).shuffleGrouping("positiveCounter")
+    builder.setBolt("negativeStream Echo", new EchoBolt, boltHintParallelism).shuffleGrouping("negativeCounter")
     builder.createTopology()
   }
 }

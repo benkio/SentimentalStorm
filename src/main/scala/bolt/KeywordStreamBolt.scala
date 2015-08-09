@@ -29,7 +29,7 @@ class KeywordStreamBolt(keyWords: List[String]) extends IRichBolt {
   override def execute(tuple: Tuple) {
      tuple.getValue(0) match {
        case t : StormTweet =>
-         val tweetWithStep = StormTweet(t.tweet,t.stormSteps :+ StormStep(_context.getThisComponentId(),_context.getThisTaskIndex()))
+         val tweetWithStep = StormTweetStepManager.AddStormStep(t, _context.getThisComponentId, _context.getThisTaskId)
          val tweetBody = t.tweet.body
          keyWords foreach (k => if (tweetBody.contains(k)) _collector.emit(tuple, new Values(tweetWithStep,k)))
        case _ => throw new ClassCastException

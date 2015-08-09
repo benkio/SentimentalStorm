@@ -25,7 +25,7 @@ class JudgeBolt(positiveWords: List[String], negativeWords: List[String]) extend
   override def execute(tuple: Tuple) {
      tuple.getValue(0) match {
        case t : StormTweet =>
-         val tweetWithStep = StormTweet(t.tweet,t.stormSteps :+ StormStep(_context.getThisComponentId(),_context.getThisTaskIndex()))
+         val tweetWithStep = StormTweetStepManager.AddStormStep(t, _context.getThisComponentId, _context.getThisTaskId)
          val tweetBody = t.tweet.body
          
          positiveWords foreach (pw => 
