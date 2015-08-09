@@ -1,5 +1,6 @@
 package bolt
 
+import backtype.storm.topology.IRichBolt
 import java.util
 import backtype.storm.topology.OutputFieldsDeclarer
 import backtype.storm.topology.IRichBolt
@@ -10,7 +11,10 @@ import backtype.storm.task.{TopologyContext, OutputCollector}
 import commonDataStructures._
 import utils._
 
-class JudgeBolt(positiveWords: List[String], negativeWords: List[String]) extends IRichBolt {
+/**
+ * @author benkio
+ */
+class KeywordStreamBolt(keyWords: List[String]) extends IRichBolt {
   var _collector: OutputCollector = null
   var _context: TopologyContext = null
  
@@ -27,22 +31,11 @@ class JudgeBolt(positiveWords: List[String], negativeWords: List[String]) extend
        case t : StormTweet =>
          val tweetWithStep = StormTweet(t.tweet,t.stormSteps :+ StormStep(_context.getThisComponentId(),_context.getThisTaskIndex()))
          val tweetBody = t.tweet.body
-         
-         positiveWords foreach (pw => 
-           if (tweetBody.contains(pw))
-             _collector.emit("PositiveTweetStream",tuple, new Values(tweetWithStep, tuple.getValue(1),pw))
-           )
-                
-         negativeWords foreach(nw => 
-           if (tweetBody.contains(nw))
-             _collector.emit("NegativeTweetStream",tuple, new Values(tweetWithStep, tuple.getValue(1),nw))
-         )
-
+         keyWords foreach (k => if (tweetBody.contains(k)) _collector.emit(tuple, new Values(tweetWithStep,k)))
        case _ => throw new ClassCastException
      }
   }
   override def declareOutputFields(declarer: OutputFieldsDeclarer) {
-     declarer.declareStream("PositiveTweetStream", new Fields("PositiveStormTweet","keyword", "sentimentalWord"));
-     declarer.declareStream("NegativeTweetStream", new Fields("NegativeStormTweet","keyword", "sentimentalWord"));
+    declarer.declare(new Fields("StormTweet", "keyword"))
    }
 }
