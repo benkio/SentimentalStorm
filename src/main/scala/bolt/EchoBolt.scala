@@ -16,7 +16,7 @@ class EchoBolt extends BaseBasicBolt{
       tuple.getValue(0) match {
         case t : StormTweet => //Common sentimental step 
           val steps: String = t.stormSteps map (st => st.compontentId + "+" + st.taskIndex) reduceLeft((x,y) => x + "=>" + y )
-          println("BY: " +t.tweet.author.handle +" @: "+ t.tweet.timestamp.toString +" CONTENT: " + t.tweet.body + " Steps: " + steps )
+          println(/*"BY: " +t.tweet.author.handle +" @: "+ t.tweet.timestamp.toString +*/" CONTENT: " + t.tweet.body + " Steps: " + steps + " keyword: " + tuple.getValue(1))
         case t : String => //After counting
           println("keyword: " + t + " sentimentalWord: " + tuple.getValue(1) + " Count: " + tuple.getValue(2))
         case _ => throw new ClassCastException

@@ -25,6 +25,7 @@ object TwitterStreamBuilder {
 
     val twitterBuilderFuture = Future {
       val filterKeywordsList = Await.result(filterKeywordsListFuture,Duration(5, SECONDS))
+      //println("FilterList: " + filterKeywordsList)
       if ( !filterKeywordsList.isEmpty)
         twitterStream.filter(new FilterQuery().track(filterKeywordsList.toArray))
       else

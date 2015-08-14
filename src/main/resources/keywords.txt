@@ -7,18 +7,27 @@
 ; 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-Windows10
-Windows8
-Windows7
-Ubuntu
-Linux Mint
-Debian
-Fedora
-OS X El Capitan
-OS X Yosemite
-OS X Maverick
+;Windows10
+;Windows8
+;Windows7
+;Ubuntu
+;Linux Mint
+;Debian
+;Fedora
+;OS X El Capitan
+;OS X Yosemite
+;OS X Maverick
 
-
+unacosabella
+CancelWendyWilliamsShow
+ConsiglioDiLettura
+Alex Sandro
+#Ferragosto
+Blair
+#Istat
+Narendra Modi
+Louis e Briana
+Fidel Castro 
 
 
 

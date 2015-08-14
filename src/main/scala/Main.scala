@@ -12,9 +12,9 @@ object Main {
     conf.setDebug(false)
 
     val cluster: LocalCluster = new LocalCluster()
-    cluster.submitTopology("OSEcho", conf, TopologyBuilder.buildOSSentimentalTopology(2,1))
+    cluster.submitTopology("OSEcho", conf, TopologyBuilder.buildOSSentimentalTopology(2,2,4,4))
 
-    Thread.sleep(300000)
+    Thread.sleep(100000)
     cluster.shutdown()
   }
 }
